@@ -112,42 +112,63 @@ def ScaneoPuertos():
     subprocess.Popen("scanner_puertos.py -target 127.0.0.1", shell=True)
 
 def main():
+    error=0
     menu="""
     1. Mandar mensaje de SMS con Twilio (API)
     2. Mandar correo electronico
     3. Escanear URLS con VIRUSTOTAL (API)
     4. Ver procesos de Computadora (PowerShell)
     5. Escaneo de Puertos
-
-    0. Salir
+    
     """
     print(menu)
-    opc=input("Opc: ")
-    if(opc=="1"):
-        twilio()
-    elif(opc=="2"):
-        Correo()
-    elif(opc=="3"):
-        VirusTotalPag()
-    elif(opc=="4"):
-        PS()
-    elif(opc=="5"):
-        ScaneoPuertos()
-    elif(opc=="0"):
-        Correo()
-    else:
-        error=1
-
+    while error==0:
+        opc=input("Opc: ")
+        if(opc=="1"):
+            twilio()
+            error=1
+        elif(opc=="2"):
+            Correo()
+            error=1
+        elif(opc=="3"):
+            VirusTotalPag()
+            error=1
+        elif(opc=="4"):
+            PS()
+            error=1
+        elif(opc=="5"):
+            ScaneoPuertos()
+            error=1
+        else:
+            error=0
+            print("Error en el caracter. Introducelo denuevo")
+    
 if __name__ == "__main__":
     import argparse
+
     description = """ Ejemplos de uso:
-             + Escaneo basico:
-             -target 127.0.0.1
-              + Indica un puerto especifico:
-             -target 127.0.0.1 -port 21
-            + Indica una lista de puertos:
-              -target 127.0.0.1 -port 21,22"""
+            Poner un numero para elegir lo quieres hacer con el programa
+            1. Mandar mensaje de SMS con Twilio (API)
+            2. Mandar correo electronico
+            3. Escanear URLS con VIRUSTOTAL (API)
+            4. Ver procesos de Computadora (PowerShell)
+            5. Escaneo de Puertos
+            """
     parser = argparse.ArgumentParser(description='PIA', epilog=description,
                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('-p',dest='proc',choices=['1','sms','2','correo','3','vt','4','procesos','5','puertos'])
+    #, action='store_true'
     params = parser.parse_args()
-    main()
+    p = params.proc
+    if p == ('1') or p ==('sms'):
+        twilio()
+    elif p == ('2') or p ==('correo'):
+        Correo()
+    elif p == ('3') or p ==('vt'):
+        VirusTotalPag()
+    elif p == ('4') or p ==('procesos'):
+        PS()
+    elif p == ('5') or p ==('puertos'):
+        ScaneoPuertos()
+    else:
+        main()

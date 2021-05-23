@@ -1,8 +1,19 @@
 import os
+import logging
+import getpass
+from twilio.rest import Client
+import smtplib
+import ssl
+import requests
+import time
+import json
+import subprocess
+import argparse
+
 
 def twilio():
-    from twilio.rest import Client
-    import getpass
+    #from twilio.rest import Client
+    #import getpass
 
     accountSID = getpass.getpass("SID: ")
     authToken = getpass.getpass("Token: ")
@@ -29,9 +40,9 @@ def twilio():
     print(message.date_sent)
 
 def Correo():
-    import smtplib
-    import ssl
-    import getpass
+    #import smtplib
+    #import ssl
+    #import getpass
     i=0
     port = 587  # For starttls
     smtpserver=('')
@@ -60,10 +71,10 @@ def Correo():
         server.sendmail(correoEnvio, correoReceptor, mensaje)
 
 def VirusTotalPag():
-    import requests
-    import time
-    import json
-    import getpass
+    #import requests
+    #import time
+    #import json
+    #import getpass
     indicators = []
     opcc="1"
     while opcc == "1":
@@ -100,19 +111,45 @@ def VirusTotalPag():
         print("Revisa en la carpeta, y abre 'vt_result.txt' para ver los resultados.")
 
 def PS():
-    import subprocess
+    #import subprocess
     comando = "Get-Process"
     lineaPS = "powershell -Executionpolicy ByPass -Command "+ comando
     runningProcesses = subprocess.check_output(lineaPS)
     print(runningProcesses.decode())
-    input("'Presiona una Tecla para cerrar'")
 
 def ScaneoPuertos():
-    import subprocess
+    #import subprocess
+    logging.warning('Si no se eligen la IP o Puertos. Se utilizaran las basicas')
+
+    principal="scanner_puertos.py "
+    puerto="-port"
+    portT=""
+    opc1=input("¿Quieres agregar una IP?\n 1. SI\nCualquier caracter. NO\nOpc: ")
+    if opc1 == "1":
+        ip=input("IP: ")
+    else:
+        ip="127.0.0.1"
+    principal=principal+"-target "+ip+" "
+
+    opc2=str(input("¿Quieres agregar puertos?\n 1. SI\nCualquier caracter. NO\nOpc: "))
+    if opc2 != "1":
+        puerto= " "
+    principal = principal + puerto
+    while opc2=="1": 
+        port=input("Puerto: ")
+        if portT == "":
+            portT=portT+" "+port
+        else:
+            portT=portT+","+port
+        opc3=str(input("¿Quieres agregar otro puerto?\n 1. SI\nCualquier caracter. NO\nOpc: "))
+        if opc3 != "1":
+            opc2= " "
+    principal = principal + portT
     subprocess.Popen("scanner_puertos.py -target 127.0.0.1", shell=True)
 
 def main():
     error=0
+    os.system("cls")
     menu="""
     1. Mandar mensaje de SMS con Twilio (API)
     2. Mandar correo electronico
@@ -144,15 +181,38 @@ def main():
             print("Error en el caracter. Introducelo denuevo")
     
 if __name__ == "__main__":
-    import argparse
+    #import argparse
 
-    description = """ Ejemplos de uso:
+    description = """ Ejemplos de uso DEFAULT:
             Poner un numero para elegir lo quieres hacer con el programa
             1. Mandar mensaje de SMS con Twilio (API)
             2. Mandar correo electronico
             3. Escanear URLS con VIRUSTOTAL (API)
             4. Ver procesos de Computadora (PowerShell)
             5. Escaneo de Puertos
+
+            Ejemplo de uso con 'argparse':
+            -p 1 o sms. Mandar mensaje de SMS con Twilio (API)
+            -p 2 o correo. Mandar correo electronico
+            -p 3 o vt. Escanear URLS con VIRUSTOTAL (API)
+            -p 4 o procesos. Ver procesos de Computadora (PowerShell)
+            -p 5 o puertos. Escaneo de Puertos
+
+            Ejemplo:
+            -p 1
+            -p sms
+            
+            -p 2
+            -p correo
+            
+            -p 3
+            -p vt
+            
+            -p 4
+            -p procesos
+            
+            -p 5
+            -p puertos
             """
     parser = argparse.ArgumentParser(description='PIA', epilog=description,
                                     formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -172,3 +232,4 @@ if __name__ == "__main__":
         ScaneoPuertos()
     else:
         main()
+input("'Presiona una Tecla para cerrar'")

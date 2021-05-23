@@ -2,7 +2,12 @@ PIA Herramienta de Seguridad
 Creador: Horacio Rodriguez Tellez
 
 ** Descripcion General **
-Herramienta de Seguridad que sirve para mandar SMS via Twilio (Requiere API KEY), mandar correo electronico, Escanear varias paginas web (Se necesita introducirlas las URLS, Ademas de requerir API KEY), Ver los procesos que esta corriento TU computadora mediante PowerShell y Escaneo de Puertos, tanto manual como personalizado.
+Herramienta de Seguridad que sirve para mandar ...
+SMS via Twilio (Requiere API KEY con https://www.twilio.com/console),
+Mandar correo electronico con asunto y cuerpo del mismo,
+Escanear varias paginas web (Se necesita introducirlas las URLS, Ademas de requerir API KEY con https://www.virustotal.com/gui/home/upload), 
+Ver los procesos que esta corriento TU computadora mediante PowerShell y
+Escaneo de Puertos, tanto manual como personalizado.
 
 ** Instrucciones de USO del programa **
 

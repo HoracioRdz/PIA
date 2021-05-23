@@ -12,9 +12,6 @@ import argparse
 
 
 def twilio():
-    #from twilio.rest import Client
-    #import getpass
-
     accountSID = getpass.getpass("SID: ")
     authToken = getpass.getpass("Token: ")
 
@@ -40,9 +37,6 @@ def twilio():
     print(message.date_sent)
 
 def Correo():
-    #import smtplib
-    #import ssl
-    #import getpass
     i=0
     port = 587  # For starttls
     smtpserver=('')
@@ -71,10 +65,6 @@ def Correo():
         server.sendmail(correoEnvio, correoReceptor, mensaje)
 
 def VirusTotalPag():
-    #import requests
-    #import time
-    #import json
-    #import getpass
     indicators = []
     opcc="1"
     while opcc == "1":
@@ -112,14 +102,12 @@ def VirusTotalPag():
         print("Revisa en la carpeta, y abre 'vt_result.txt' para ver los resultados.")
 
 def PS():
-    #import subprocess
     comando = "Get-Process"
     lineaPS = "powershell -Executionpolicy ByPass -Command "+ comando
     runningProcesses = subprocess.check_output(lineaPS)
     print(runningProcesses.decode())
 
 def ScaneoPuertos():
-    #import subprocess
     logging.warning('Si no se eligen la IP o Puertos. Se utilizaran las basicas')
 
     principal="scanner_puertos.py "
@@ -146,7 +134,7 @@ def ScaneoPuertos():
         if opc3 != "1":
             opc2= " "
     principal = principal + portT
-    subprocess.Popen("scanner_puertos.py -target 127.0.0.1", shell=True)
+    subprocess.Popen(principal, shell=True)
 
 def main():
     error=0
@@ -182,8 +170,6 @@ def main():
             print("Error en el caracter. Introducelo denuevo")
     
 if __name__ == "__main__":
-    #import argparse
-
     description = """ Ejemplos de uso DEFAULT:
             Poner un numero para elegir lo quieres hacer con el programa
             1. Mandar mensaje de SMS con Twilio (API)
@@ -233,4 +219,4 @@ if __name__ == "__main__":
         ScaneoPuertos()
     else:
         main()
-input("'Presiona una Tecla para cerrar'")
+input("'Presiona una Tecla para cerrar'\n")

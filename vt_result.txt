@@ -1,0 +1,3 @@
+google.com	NOT MALICIOUS
+https://webzel.net	MALICIOUS
+facebook.com	NOT MALICIOUS

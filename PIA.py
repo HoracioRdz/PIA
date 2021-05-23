@@ -86,7 +86,8 @@ def VirusTotalPag():
     api_key = getpass.getpass("Ingresa API")
     url = 'https://www.virustotal.com/vtapi/v2/url/report'
     os.system("cls")
-    print("......Tardara 15 segundos por cada sitio web......")
+    logging.warning('Tardara 15 segundos por cada sitio web')
+    #print("......Tardara 15 segundos por cada sitio web......")
     for site in indicators:
         params = {'apikey':api_key, 'resource':site}
         response = requests.get(url, params=params)
